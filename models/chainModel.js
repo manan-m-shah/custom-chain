@@ -6,7 +6,8 @@
 // - nft-id: string
 
 import mongoose from 'mongoose';
-import {  BlockchainType } from './blockchain';
+import { Blockchain } from '../blockchain';
+// import {  BlockchainType } from './blockchain';
 
 const Schema = mongoose.Schema;
 
@@ -17,7 +18,7 @@ const Schema = mongoose.Schema;
 // });
  
 const Blockchain = new Schema({
-  fblockchain : { type: BlockchinType}
+  blockchain : Blockchain
 })
 
-export default mongoose.model('Waitlist', WaitlistSchema);
+export default mongoose.model('Blockchain', Blockchain);

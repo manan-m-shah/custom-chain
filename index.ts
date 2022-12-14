@@ -1,51 +1,38 @@
-import { getPublicKey, signNewTransaction } from './keygenerator';
-'use strict';
-import { Blockchain, BlockchainType } from './blockchain';
-import { Transaction } from './transaction';
+// // initializing imports using es7 destructuring
+// import express from 'express';
+// import bodyParser from 'body-parser';
+// // import cors from 'cors';
+// import mongoose from 'mongoose';
+// import dotenv from 'dotenv'
+// dotenv.config();
 
+// const app = express();
+// const port = process.env.PORT || 5000;
 
-// Create new instance of Blockchain class
-// const BITSChain = Blockchain();
+// // connecting to mongoDB
+// // @ts-ignore
+// mongoose.connect(process.env.MONGOURI, { useNewUrlParser: true });
+// mongoose.connection.on('error', (err) => {
+//   console.error('Error connecting to mongoDB:', err);
+// });
 
+// mongoose.connection.once('open', () => {
+//   console.log('Connected to mongoDB');
+// });
 
+// // middleware to parse request bodies as json
+// app.use(bodyParser.json());
+// // middleware to allow cross-origin requests
+// // app.use(cors());
 
-// Mine first block
-// BITSChain.minePendingTransactions(myWalletAddress);
+// // routes for the waitlist
+// import waitlistRouter from './routes/blockchain';
+// app.use('/waitlist', waitlistRouter);
 
+// // starting server
+// app.listen(port, () => {
+//   console.log(`Server listening on port ${port}`);
+// });
 
-
-// // Create a transaction & sign it with your key
-// const tx1 = Transaction(myWalletAddress, user1WalletAddress, 100);
-// tx1.signTransaction(myKey);
-// BITSChain.addTransaction(tx1);
-
-// // // Mine block
-// BITSChain.minePendingTransactions(myWalletAddress);
-
-export const createNewChain = () => {
-    const newChain = Blockchain();
-    return newChain;
-}
-
-export const createNewTransaction = (blockchain: BlockchainType, fromAddressPrivateKey: string, toAddress: string, amount: number) => {
-    const fromAddress = getPublicKey(fromAddressPrivateKey);
-    const newTransaction = Transaction(fromAddress, toAddress, amount);
-    signNewTransaction(fromAddressPrivateKey, newTransaction);
-    blockchain.addTransaction(newTransaction);
-    blockchain.minePendingTransactions(fromAddress);
-    console.log(blockchain)
-    return newTransaction;
-}
-
-export const minePendingTransactions = (blockchain: BlockchainType, miningRewardAddress: string) => {
-    blockchain.minePendingTransactions(miningRewardAddress);
-}
-
-// console.log();
-// console.log('Blockchain valid?', BITSChain.isChainValid() ? 'Yes' : 'No');
-
-// console.log();
-// console.log('Tampering with chain...');
-// BITSChain.chain[1].transactions[0].amount = 10;
-// // Check if the chain is valid
-// console.log('Blockchain valid?', BITSChain.isChainValid() ? 'Yes' : 'No');
+// export default app;
+console.log('hello world')
