@@ -5,9 +5,9 @@ import { Block, BlockType } from './block';
 import { Transaction, TransactionType } from './transaction';
 const ec = new EC.ec('secp256k1');
 
-const globalDifficulty = 4;
+const globalDifficulty = 2;
 
-type BlockchainType = {
+export type BlockchainType = {
     chain: BlockType[];
     difficulty: number;
     pendingTransactions: TransactionType[];
