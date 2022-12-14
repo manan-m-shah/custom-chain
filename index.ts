@@ -1,64 +1,51 @@
+import { getPublicKey, signNewTransaction } from './keygenerator';
 'use strict';
-import { Blockchain } from './blockchain';
+import { Blockchain, BlockchainType } from './blockchain';
 import { Transaction } from './transaction';
-import { myKey, myWalletAddress, user1Key, user1WalletAddress, user2Key, user2WalletAddress, user3Key, user3WalletAddress } from './userkeys';
 
-
-const logBalances = () => {
-    console.log();
-    console.log(
-        `Balance of myWallet is ${BITSChain.getBalanceOfAddress(myWalletAddress)}`
-    );
-    console.log();
-    console.log(
-        `Balance of user1Wallet is ${BITSChain.getBalanceOfAddress(user1WalletAddress)}`
-    );
-    console.log();
-    console.log(
-        `Balance of user2Wallet is ${BITSChain.getBalanceOfAddress(user2WalletAddress)}`
-    );
-    // console.log();
-    // console.log(
-    //     `Balance of user3Wallet is ${BITSChain.getBalanceOfAddress(user3WalletAddress)}`
-    // );
-}
 
 // Create new instance of Blockchain class
-const BITSChain = Blockchain();
+// const BITSChain = Blockchain();
 
-logBalances();
+
 
 // Mine first block
-BITSChain.minePendingTransactions(myWalletAddress);
+// BITSChain.minePendingTransactions(myWalletAddress);
 
-logBalances();
 
-// Create a transaction & sign it with your key
-const tx1 = Transaction(myWalletAddress, user1WalletAddress, 100);
-tx1.signTransaction(myKey);
-BITSChain.addTransaction(tx1);
 
-// Mine block
-BITSChain.minePendingTransactions(myWalletAddress);
+// // Create a transaction & sign it with your key
+// const tx1 = Transaction(myWalletAddress, user1WalletAddress, 100);
+// tx1.signTransaction(myKey);
+// BITSChain.addTransaction(tx1);
 
-logBalances();
+// // // Mine block
+// BITSChain.minePendingTransactions(myWalletAddress);
 
-// Create second transaction
-const tx2 = Transaction(myWalletAddress, user2WalletAddress, 40);
-tx2.signTransaction(myKey);
-BITSChain.addTransaction(tx2);
+export const createNewChain = () => {
+    const newChain = Blockchain();
+    return newChain;
+}
 
-// Mine block
-BITSChain.minePendingTransactions(myWalletAddress);
+export const createNewTransaction = (blockchain: BlockchainType, fromAddressPrivateKey: string, toAddress: string, amount: number) => {
+    const fromAddress = getPublicKey(fromAddressPrivateKey);
+    const newTransaction = Transaction(fromAddress, toAddress, amount);
+    signNewTransaction(fromAddressPrivateKey, newTransaction);
+    blockchain.addTransaction(newTransaction);
+    blockchain.minePendingTransactions(fromAddress);
+    console.log(blockchain)
+    return newTransaction;
+}
 
-logBalances();
+export const minePendingTransactions = (blockchain: BlockchainType, miningRewardAddress: string) => {
+    blockchain.minePendingTransactions(miningRewardAddress);
+}
 
-// Check if the chain is valid
-console.log();
-console.log('Blockchain valid?', BITSChain.isChainValid() ? 'Yes' : 'No');
+// console.log();
+// console.log('Blockchain valid?', BITSChain.isChainValid() ? 'Yes' : 'No');
 
 // console.log();
 // console.log('Tampering with chain...');
 // BITSChain.chain[1].transactions[0].amount = 10;
-// Check if the chain is valid
+// // Check if the chain is valid
 // console.log('Blockchain valid?', BITSChain.isChainValid() ? 'Yes' : 'No');
